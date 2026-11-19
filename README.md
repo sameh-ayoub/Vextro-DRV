@@ -20,7 +20,7 @@
 [![License](https://img.shields.io/badge/license-MIT-121212?style=flat-square)](LICENSE)
 [![Java](https://img.shields.io/badge/Java-no%20dependencies-8A5A36?style=flat-square&logo=openjdk&logoColor=white)](#build)
 
-[How it works](#how-it-works) · [Install](#install) · [Build](#build) · [العربية](#العربية)
+[How it works](#how-it-works) · [FAQ](#faq) · [Install](#install) · [Build](#build) · [العربية](#العربية)
 
 </div>
 
@@ -94,6 +94,31 @@ flowchart LR
 3. UDP streams are tracked by address and port tuple. The first packet that matches the size rule
    triggers the opening sequence; everything after it is forwarded as-is.
 4. TCP segments are answered locally, so the app never notices that its connection is relayed.
+
+## FAQ
+
+**Is there a Drover for Android / for phones?**
+The original [Drover](https://github.com/hdrover/discord-drover) is a Windows tool. Vextro DRV is an
+independent Android implementation of the same idea — it runs on the phone itself, no computer needed.
+
+**Discord text works but voice never connects on a restricted network. Is this for me?**
+Yes. That is the exact case it addresses: the first packet of each voice stream is adapted so the
+connection is not classified the same way, while text, chat and login keep working.
+
+**Does it need a VPN subscription, root or an account?**
+No. It uses the local `VpnService` API to route one package. No remote server, no account, no root.
+Android allows one VPN at a time, so starting it disconnects any other VPN.
+
+**Does it slow the rest of the phone?**
+No. Only `com.discord` enters the tunnel; every other app leaves through the normal connection.
+
+**Which Android versions are supported?**
+Android 7.0 (API 24) and newer, on ARM, ARM64 and x86. Around 333 KB, no native code.
+Tested on a Redmi 9A running Android 11.
+
+**هل يوجد Drover للهاتف؟** نعم — هذا التطبيق. الفكرة الأصلية من Drover لـ ويندوز، وهذا تنفيذ مستقل لها على أندرويد.
+**هل يحتاج روت أو VPN؟** لا روت. يستخدم `VpnService` محليًا لتوجيه ديسكورد وحده، بلا اشتراك وبلا سيرفر.
+**هل يؤثر على بقية التطبيقات؟** لا، فقط `com.discord` يدخل النفق.
 
 ## Requirements
 

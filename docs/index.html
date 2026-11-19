@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vextro DRV — Drover للأندرويد | صوت ديسكورد يعمل في الإمارات بدون VPN</title>
+<meta name="description" content="Vextro DRV هو نسخة أندرويد من فكرة Drover: يوجّه صوت ديسكورد عبر نفق لتطبيق واحد فقط (com.discord) بدل VPN شامل للجهاز. حل مشكلة عدم عمل الفويس في الإمارات والشبكات المقيّدة، بدون روت، وباستهلاك بيانات شبه صفري.">
+<meta name="keywords" content="Drover للأندرويد, Drover للهاتف, Drover Android, ديسكورد فويس الإمارات, Discord voice UAE, صوت ديسكورد ما يشتغل, discord voice not working UAE, Vextro DRV, VpnService per app">
+<link rel="canonical" href="https://sameh-ayoub.github.io/Vextro-DRV/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Vextro DRV">
+<meta property="og:title" content="Vextro DRV — Drover for Android">
+<meta property="og:description" content="Discord voice routing for Android: one app, one tunnel. The Android answer to Drover, without a full-device VPN.">
+<meta property="og:image" content="https://sameh-ayoub.github.io/Vextro-DRV/social-preview.png">
+<meta property="og:url" content="https://sameh-ayoub.github.io/Vextro-DRV/">
+<meta property="og:locale" content="ar_AE">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vextro DRV — Drover for Android">
+<meta name="twitter:description" content="Discord voice routing for Android: one app, one tunnel.">
+<meta name="twitter:image" content="https://sameh-ayoub.github.io/Vextro-DRV/social-preview.png">
+<link rel="icon" href="./logo.png">
+<style>
+  :root{
+    --paper:#fffdfb; --ink:#121212; --soft:#4a4541; --muted:#8b837b;
+    --brown:#8a5a36; --brown-deep:#6b4423; --tint:#f3eae2; --line:#e3d7cb;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,"Noto Naskh Arabic",sans-serif;
+    line-height:1.7; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--brown-deep)}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  header{border-bottom:1px solid var(--line);background:var(--paper)}
+  .bar{display:flex;align-items:center;gap:14px;padding:16px 0;flex-wrap:wrap}
+  .bar img{width:44px;height:44px;border-radius:11px}
+  .bar strong{font-size:19px;letter-spacing:.02em}
+  .bar nav{margin-inline-start:auto;display:flex;gap:18px;font-size:14px;flex-wrap:wrap}
+  .bar nav a{text-decoration:none;color:var(--soft)}
+  .bar nav a:hover{color:var(--brown)}
+  .hero{padding:54px 0 34px;border-bottom:1px solid var(--line)}
+  .hero h1{font-size:clamp(28px,5vw,42px);line-height:1.25;margin:0 0 14px;letter-spacing:-.01em}
+  .hero h1 span{color:var(--brown)}
+  .hero p.lead{font-size:18px;color:var(--soft);max-width:64ch;margin:0 0 26px}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .btn{
+    display:inline-block;background:var(--brown);color:#fff;text-decoration:none;
+    padding:14px 26px;border-radius:12px;font-weight:700;font-size:16px;
+  }
+  .btn:hover{background:var(--ink)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{background:var(--tint);color:var(--ink)}
+  .meta{font-size:13px;color:var(--muted);margin-top:14px}
+  section{padding:40px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:0}
+  h2{font-size:22px;margin:0 0 16px;letter-spacing:.01em}
+  h2 .rule{display:block;width:34px;height:2px;background:var(--brown);margin-bottom:12px}
+  p{color:var(--soft)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:18px}
+  .card{border:1px solid var(--line);border-radius:14px;padding:18px}
+  .card h3{margin:0 0 8px;font-size:15px}
+  .card p{margin:0;font-size:13.5px}
+  dl.faq{margin:0}
+  dl.faq dt{font-weight:700;margin-top:22px;font-size:15.5px;color:var(--ink)}
+  dl.faq dd{margin:6px 0 0;color:var(--soft);font-size:14.5px}
+  .shot{display:flex;gap:16px;overflow:auto;padding:6px 0}
+  .shot img{width:190px;border:1px solid var(--line);border-radius:16px}
+  .en{direction:ltr;text-align:left}
+  .en h2 .rule{margin-left:0}
+  footer{padding:30px 0 44px;text-align:center;color:var(--muted);font-size:13px}
+  footer strong{display:block;color:var(--brown-deep);letter-spacing:.16em;font-size:12px;margin-top:10px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <img src="./logo.png" alt="Vextro DRV">
+    <strong>Vextro DRV</strong>
+    <nav>
+      <a href="#download">تحميل</a>
+      <a href="#how">كيف يعمل</a>
+      <a href="#faq">الأسئلة</a>
+      <a href="#english">English</a>
+      <a href="https://github.com/sameh-ayoub/Vextro-DRV">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero">
+    <h1>Drover للأندرويد — <span>صوت ديسكورد</span> يعمل على شبكات الإمارات المقيّدة</h1>
+    <p class="lead">
+      Vextro DRV تطبيق أندرويد يوجّه صوت ديسكورد عبر نفق يُدخل <b>تطبيق ديسكورد وحده</b>،
+      ويعالج أول حزمة في كل مسار صوتي قبل أن تصل الشبكة — بدل تشغيل VPN شامل يبطّئ الجوال كله.
+      لا روت، لا تسجيل دخول، لا سيرفر وسيط، واستهلاك بيانات شبه صفري.
+    </p>
+    <div class="cta" id="download">
+      <a class="btn" href="https://github.com/sameh-ayoub/Vextro-DRV/releases/latest">⬇ تحميل APK — الإصدار 1.2</a>
+      <a class="btn ghost" href="https://github.com/sameh-ayoub/Vextro-DRV">الكود على GitHub</a>
+    </div>
+    <div class="meta">أندرويد 7.0 أو أحدث · حجم 333 كيلوبايت · موقّع بمفتاح إصدار · عربي وإنجليزي</div>
+  </div>
+
+  <section>
+    <h2><span class="rule"></span>هل هذا هو Drover نفسه؟</h2>
+    <p>
+      <b>Drover</b> أداة مفتوحة المصدر لمستخدم <b>hdrover</b> تعمل على <b>ويندوز</b>: تعترض أول حزمة UDP
+      في مكالمة ديسكورد وتسبقها بحزمة تمويه، فتُصنَّف المكالمة بشكل مختلف على الشبكة.
+      <b>Vextro DRV</b> هو تنفيذ مستقل لفكرة Drover على <b>أندرويد</b>، مكتوب بـ Java على
+      <code>VpnService</code>، ولا يحتاج حاسبًا ولا كابلًا ولا برنامجًا على الكمبيوتر.
+      إن كنت تبحث عن «Drover للهاتف» أو «Drover للأندرويد» فهذا هو ما تبحث عنه.
+    </p>
+  </section>
+
+  <section id="how">
+    <h2><span class="rule"></span>كيف يعمل</h2>
+    <p>
+      ينشئ التطبيق نفقًا محليًا ويسمح بدخول حزمة واحدة فقط: <code>com.discord</code>.
+      كل حزمة تُقرأ من النفق تُفكَّك يدويًا (IPv4 + UDP أو TCP)، والمسارات الصوتية تُتابَع حسب العنوان والمنفذ.
+      عند أول حزمة بحجم 74 بايت في المسار تُرسل الكتلة المجهّزة (1200 بايت) ثم بايتان للعلامة،
+      ثم وقفة قصيرة، ثم الحزمة الأصلية. بعد ذلك يمر الصوت كما هو.
+    </p>
+    <p>
+      الاتصالات الأخرى في ديسكورد (البوابة، الشات، تسجيل الدخول) تمر عبر وكيل TCP محلي،
+      لذلك لا تنكسر بقية مزايا التطبيق أثناء التشغيل.
+    </p>
+    <div class="grid">
+      <div class="card"><h3>تطبيق واحد فقط</h3><p>ديسكورد يدخل النفق، وواتساب ويوتيوب والبنك تبقى على اتصالها الطبيعي.</p></div>
+      <div class="card"><h3>تكلفة ~1.2 كيلوبايت</h3><p>مرة واحدة لكل مسار صوتي، لا إعادة توجيه مستمرة ولا استهلاك باند.</p></div>
+      <div class="card"><h3>بلا روت وبلا حساب</h3><p>لا صلاحيات جذر ولا تسجيل دخول ولا سيرفر خارجي.</p></div>
+    </div>
+    <div class="shot">
+      <img src="./screen-ar.png" alt="واجهة Vextro DRV بالعربية أثناء مكالمة صوتية">
+      <img src="./screen-en.png" alt="Vextro DRV English interface">
+    </div>
+  </section>
+
+  <section id="faq">
+    <h2><span class="rule"></span>الأسئلة الشائعة</h2>
+    <dl class="faq">
+      <dt>هل يوجد Drover للهاتف أو للأندرويد؟</dt>
+      <dd>نعم. Drover الأصلي لـ ويندوز فقط. Vextro DRV هو تنفيذ مستقل لفكرته على أندرويد، ويعمل داخل الجوال مباشرة بدون كمبيوتر.</dd>
+
+      <dt>صوت ديسكورد لا يعمل في الإمارات — هل هذه هي المشكلة؟</dt>
+      <dd>في كثير من الشبكات المقيّدة يُصنَّف اتصال الصوت فيُقطع، بينما النص والشات يعملان. التطبيق يعالج أول حزمة من كل مسار صوتي لتفادي هذا التصنيف. إن كان النص يعمل والصوت لا، فهذه الحالة بالضبط.</dd>
+
+      <dt>هل أحتاج VPN أو اشتراكًا؟</dt>
+      <dd>لا. التطبيق يستخدم <code>VpnService</code> محليًا لتوجيه تطبيق واحد، وليس نفقًا خارجيًا. لا اشتراك ولا سيرفر ولا حساب. لاحظ أن أندرويد يسمح بـ VPN واحد، فتشغيله يقطع أي VPN آخر.</dd>
+
+      <dt>هل يؤثر على بقية التطبيقات أو على سرعة النت؟</dt>
+      <dd>لا. فقط <code>com.discord</code> يدخل النفق، وبقية التطبيقات تخرج على الشبكة مباشرة.</dd>
+
+      <dt>هل يحتاج روت أو صلاحيات خاصة؟</dt>
+      <dd>لا روت. يحتاج فقط الموافقة على طلب VPN من النظام مرة واحدة.</dd>
+
+      <dt>على أي إصدارات أندرويد يعمل؟</dt>
+      <dd>أندرويد 7.0 (API 24) وأحدث، على ARM أو ARM64 أو x86 — التطبيق بلا كود أصلي. مُختبَر على Redmi 9A بنظام أندرويد 11.</dd>
+
+      <dt>هل هو آمن؟</dt>
+      <dd>الكود مفتوح بالكامل على GitHub، بلا مكتبات خارجية، ولا يرسل بياناتك لأي جهة. الاستخدام شخصي وعلى مسؤولية المستخدم، وقد يخالف سياسة مزوّد شبكتك.</dd>
+    </dl>
+  </section>
+
+  <section id="english" class="en" lang="en">
+    <h2><span class="rule"></span>English</h2>
+    <p>
+      <b>Vextro DRV</b> is the Android implementation of the Drover technique: it opens a
+      <code>VpnService</code> tunnel that includes only <code>com.discord</code>, adapts the first UDP packet of
+      each voice stream (1200-byte block, two marker bytes, a configurable pause), and relays TCP so the
+      gateway and chat keep working. No root, no account, no remote server.
+    </p>
+    <p>
+      Use it when Discord text works but voice does not connect on a restricted network.
+      Android 7.0+, ~333 KB, Arabic and English.
+      <a href="https://github.com/sameh-ayoub/Vextro-DRV/releases/latest">Download the APK</a> or read the
+      <a href="https://github.com/sameh-ayoub/Vextro-DRV">source</a>.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Vextro DRV · MIT License · الفكرة الأصلية من مشروع
+    <a href="https://github.com/hdrover/discord-drover">Drover</a> لـ hdrover
+    <strong>DEV BY SAMEH</strong>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Vextro DRV",
+      "alternateName": ["Drover for Android", "Drover للأندرويد", "Vextro DRV APK"],
+      "applicationCategory": "UtilitiesApplication",
+      "applicationSubCategory": "Network utility",
+      "operatingSystem": "Android 7.0+",
+      "softwareVersion": "1.2",
+      "fileSize": "333KB",
+      "inLanguage": ["ar", "en"],
+      "isAccessibleForFree": true,
+      "downloadUrl": "https://github.com/sameh-ayoub/Vextro-DRV/releases/latest",
+      "installUrl": "https://github.com/sameh-ayoub/Vextro-DRV/releases/latest",
+      "codeRepository": "https://github.com/sameh-ayoub/Vextro-DRV",
+      "license": "https://github.com/sameh-ayoub/Vextro-DRV/blob/main/LICENSE",
+      "author": {"@type": "Person", "name": "Sameh", "url": "https://github.com/sameh-ayoub"},
+      "description": "Android app that routes Discord voice through a per-app tunnel, applying the Drover first-packet technique, instead of a full-device VPN.",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "هل يوجد Drover للهاتف أو للأندرويد؟",
+          "acceptedAnswer": {"@type": "Answer", "text": "نعم. Drover الأصلي يعمل على ويندوز فقط. Vextro DRV هو تنفيذ مستقل لفكرته على أندرويد ويعمل داخل الجوال بدون كمبيوتر."}
+        },
+        {
+          "@type": "Question",
+          "name": "صوت ديسكورد لا يعمل في الإمارات، هل هذا هو الحل؟",
+          "acceptedAnswer": {"@type": "Answer", "text": "Vextro DRV يعالج أول حزمة UDP في كل مسار صوتي لتجنّب تصنيف الاتصال على الشبكات المقيّدة، ويُستخدم عندما يعمل النص ولا يعمل الصوت."}
+        },
+        {
+          "@type": "Question",
+          "name": "هل يحتاج التطبيق VPN أو روت؟",
+          "acceptedAnswer": {"@type": "Answer", "text": "لا يحتاج روت. يستخدم VpnService محليًا لتوجيه تطبيق ديسكورد فقط، بلا اشتراك وبلا سيرفر خارجي. أندرويد يسمح بـ VPN واحد في الوقت نفسه."}
+        },
+        {
+          "@type": "Question",
+          "name": "هل يؤثر على بقية التطبيقات؟",
+          "acceptedAnswer": {"@type": "Answer", "text": "لا. فقط com.discord يدخل النفق، وبقية التطبيقات تبقى على اتصالها الطبيعي بسرعتها."}
+        },
+        {
+          "@type": "Question",
+          "name": "ما إصدارات أندرويد المدعومة؟",
+          "acceptedAnswer": {"@type": "Answer", "text": "أندرويد 7.0 (API 24) وأحدث، على ARM وARM64 وx86، وحجم التطبيق حوالي 333 كيلوبايت."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>
