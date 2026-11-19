@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 <img src="docs/banner.png" alt="Vextro DRV" width="100%">
 
