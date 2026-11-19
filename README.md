@@ -6,23 +6,44 @@
 
 **Discord voice routing for Android — one app, one tunnel.**
 
-Put Discord's voice traffic on a route that survives restrictive networks, without pushing the
-whole phone through a VPN. Only `com.discord` is touched; every other app keeps its normal
-connection, speed and battery life.
-
 <br>
 
-[![Platform](https://img.shields.io/badge/Android-7.0%2B-8A5A36?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com)
-[![Min SDK](https://img.shields.io/badge/minSdk-24-121212?style=for-the-badge)](#requirements)
-[![Release](https://img.shields.io/badge/release-v1.1-8A5A36?style=for-the-badge)](#download)
-[![License](https://img.shields.io/badge/license-MIT-121212?style=for-the-badge)](LICENSE)
-[![Java](https://img.shields.io/badge/Java-no%20dependencies-8A5A36?style=for-the-badge&logo=openjdk&logoColor=white)](#build)
+<a href="https://github.com/sameh-ayoub/Vextro-DRV/releases/latest">
+  <img src="https://img.shields.io/badge/%E2%AC%87%20DOWNLOAD%20APK-v1.2-8A5A36?style=for-the-badge" alt="Download APK" height="46">
+</a>
 
-[Download](#download) · [How it works](#how-it-works) · [Build](#build) · [العربية](#العربية)
+<br><br>
+
+[![Platform](https://img.shields.io/badge/Android-7.0%2B-8A5A36?style=flat-square&logo=android&logoColor=white)](https://developer.android.com)
+[![Min SDK](https://img.shields.io/badge/minSdk-24-121212?style=flat-square)](#requirements)
+[![Release](https://img.shields.io/badge/release-v1.2-8A5A36?style=flat-square)](https://github.com/sameh-ayoub/Vextro-DRV/releases)
+[![License](https://img.shields.io/badge/license-MIT-121212?style=flat-square)](LICENSE)
+[![Java](https://img.shields.io/badge/Java-no%20dependencies-8A5A36?style=flat-square&logo=openjdk&logoColor=white)](#build)
+
+[How it works](#how-it-works) · [Install](#install) · [Build](#build) · [العربية](#العربية)
 
 </div>
 
 ---
+
+## Screenshots
+
+<table>
+<tr>
+<td width="50%"><img src="docs/screen-ar.png" alt="Arabic interface"></td>
+<td width="50%"><img src="docs/screen-en.png" alt="English interface"></td>
+</tr>
+<tr>
+<td align="center"><sub>Arabic</sub></td>
+<td align="center"><sub>English</sub></td>
+</tr>
+</table>
+
+<div align="center">
+<img src="docs/demo.gif" alt="Starting the tunnel" width="300">
+<br>
+<sub>Press start, join a call — counters move within seconds.</sub>
+</div>
 
 ## Overview
 
@@ -30,8 +51,8 @@ Vextro DRV is the Android companion to the Drover idea: instead of hiding traffi
 full-device VPN, it adapts the **first packet** of each voice stream so the connection is read
 differently by the network, then lets the rest of the call flow untouched.
 
-The result is a tunnel that costs almost nothing: two small markers and a 1.2 KB block per
-voice stream, sent once, followed by a short pause.
+Only `com.discord` enters the tunnel. Every other app keeps its normal connection, speed and
+battery life.
 
 | | Full-device VPN | Vextro DRV |
 |---|---|---|
@@ -39,7 +60,7 @@ voice stream, sent once, followed by a short pause.
 | Data overhead | everything re-routed | ~1.2 KB per voice stream |
 | Extra latency | continuous | once, at stream start |
 | Battery | always on | negligible |
-| Works with other apps | slows them down | they never notice |
+| Other apps | slowed down | never notice |
 
 ## Features
 
@@ -47,13 +68,12 @@ voice stream, sent once, followed by a short pause.
 - **Voice-first logic** — the first 74-byte UDP packet of a stream is preceded by the packaged
   1200-byte block, two marker bytes and a configurable pause.
 - **Order preserved** — packets arriving during the pause are queued and sent afterwards in order.
-- **TCP relay** — gateway, chat and login keep working because each TCP session is terminated
-  locally and reconnected through a protected socket.
+- **TCP relay** — gateway, chat and login keep working; each session is terminated locally and
+  reconnected through a protected socket.
 - **Return path rebuilt** — responses get fresh IPv4/UDP headers and checksums before going back
   into the tunnel.
 - **Arabic & English** — switch instantly from the flags in the header.
-- **Live view** — counters for handled packets, stream starts, returned packets and TCP sessions,
-  plus an in-app log.
+- **Live counters** — handled packets, stream starts, returned packets, TCP sessions and IPv6 skips.
 
 ## How it works
 
@@ -79,29 +99,45 @@ flowchart LR
 
 - Android 7.0 (API 24) or newer.
 - Discord installed under the package name `com.discord`.
-- ARM, ARM64 or x86 — the app has no native code, so every ABI is supported.
+- ARM, ARM64 or x86 — no native code, so every ABI works.
 
-## Download
+## Install
 
-Grab [`Vextro-DRV-v1.1.apk`](Vextro-DRV-v1.1.apk) from this repository, or install over ADB:
+Grab [`Vextro-DRV-v1.2.apk`](https://github.com/sameh-ayoub/Vextro-DRV/releases/latest) from the
+releases page, or install over ADB:
 
 ```bash
-adb install -r Vextro-DRV-v1.1.apk
+adb install -r Vextro-DRV-v1.2.apk
 ```
+
+The APK is signed with a private release key, so updates install cleanly over older versions
+signed with the same key.
 
 ## Build
 
 ```bash
-git clone https://github.com/sameh-ayoub/Vextro-drover.git
-cd Vextro-drover
+git clone https://github.com/sameh-ayoub/Vextro-DRV.git
+cd Vextro-DRV
 
 export ANDROID_HOME=/path/to/android-sdk
-./gradlew assembleDebug
+./gradlew assembleDebug     # or assembleRelease
 ```
 
-The APK is written to `app/build/outputs/apk/debug/`.
+The APK is written to `app/build/outputs/apk/`.
 
 `compileSdk 34` · `targetSdk 33` · `minSdk 24` · Java 17 · no third-party dependencies.
+
+Release builds read `keystore.properties` from the project root:
+
+```properties
+storeFile=release.jks
+storePassword=********
+keyAlias=vextro
+keyPassword=********
+```
+
+Without that file the release build falls back to the debug key, so the repository stays buildable
+for anyone who clones it.
 
 ## Usage
 
@@ -126,6 +162,7 @@ Changes take effect after restarting the tunnel.
 - IPv6 packets are skipped; networks that carry voice over IPv6 only are not covered.
 - On Xiaomi/Redmi devices, enable Autostart and set the battery profile to *No restrictions*,
   otherwise the system may stop the service.
+- Tested on a Redmi 9A running Android 11. Other devices are welcome in the issue tracker.
 
 ## Project layout
 
@@ -138,6 +175,11 @@ app/src/main/java/com/sameh/drover/
 ├── Net.java                IPv4 / UDP / TCP builders and checksums
 └── Lang.java               in-app language handling
 ```
+
+## Disclaimer
+
+Personal use only, at your own risk. Routing traffic in a way that avoids a network policy may
+conflict with your provider's terms or local regulations — that decision is yours.
 
 ## Credits
 
@@ -186,8 +228,10 @@ on Windows.
 ### التثبيت
 
 ```bash
-adb install -r Vextro-DRV-v1.1.apk
+adb install -r Vextro-DRV-v1.2.apk
 ```
+
+أو نزّل الملف من صفحة الإصدارات مباشرة.
 
 ### البناء
 
@@ -216,6 +260,11 @@ export ANDROID_HOME=/path/to/android-sdk
 - أندرويد يسمح بـ VPN واحد فقط، فتشغيل التطبيق يقطع أي VPN آخر.
 - حزم IPv6 تُهمل، والشبكات التي تنقل الصوت عبر IPv6 فقط غير مشمولة.
 - على أجهزة Xiaomi/Redmi فعّل «بدء تلقائي» واضبط البطارية على «بدون قيود».
+
+### إخلاء مسؤولية
+
+الاستخدام شخصي وعلى مسؤولية المستخدم. تعديل مسار الترافيك لتجاوز سياسة شبكة قد يخالف شروط
+مزوّد الخدمة أو أنظمة بلدك، والقرار قرارك.
 
 <div align="center">
 

@@ -27,11 +27,11 @@
     <string name="opt_fake">Send the decoy packet</string>
     <string name="opt_fake_desc">Places the packaged 1200-byte packet before the marker bytes.</string>
 
-    <string name="stat_udp">UDP packets handled: %1$d</string>
-    <string name="stat_decoy">First-packet routines: %1$d</string>
-    <string name="stat_return">Packets returned: %1$d</string>
-    <string name="stat_tcp">TCP sessions: %1$d</string>
-    <string name="stat_ipv6">IPv6 packets skipped: %1$d</string>
+    <string name="stat_udp">UDP packets handled: %1$s</string>
+    <string name="stat_decoy">First-packet routines: %1$s</string>
+    <string name="stat_return">Packets returned: %1$s</string>
+    <string name="stat_tcp">TCP sessions: %1$s</string>
+    <string name="stat_ipv6">IPv6 packets skipped: %1$s</string>
 
     <string name="note">Settings apply after a restart. Only Discord is routed; every other app keeps the normal connection.</string>
 
@@ -48,14 +48,19 @@
     <string name="notif_stop">Stop</string>
 
     <string name="log_manual_stop">stop requested</string>
-    <string name="log_opened">tunnel open · delay %1$d ms · strict %2$s · decoy %3$s</string>
+    <string name="log_opened">tunnel open · delay %1$s ms · strict %2$s · decoy %3$s</string>
     <string name="log_closed">tunnel closed</string>
     <string name="log_revoked">vpn permission revoked</string>
-    <string name="log_asset">%1$s loaded · %2$d bytes</string>
+    <string name="log_asset">%1$s loaded · %2$s bytes</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
 
     <string name="flow_new">flow → %1$s:%2$d</string>
     <string name="err_protect_udp">protect() rejected on UDP</string>
     <string name="err_protect_tcp">protect() rejected on TCP</string>
+    <string name="lbl_udp">UDP packets</string>
+    <string name="lbl_decoy">Stream starts</string>
+    <string name="lbl_return">Packets returned</string>
+    <string name="lbl_tcp">TCP sessions</string>
+    <string name="lbl_ipv6">IPv6 skipped</string>
 </resources>

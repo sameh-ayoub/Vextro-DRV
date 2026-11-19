@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -24,7 +25,12 @@ public class MainActivity extends Activity {
 
     private Button toggle;
     private TextView status;
-    private TextView stats;
+    private TextView statUdp;
+    private TextView statDecoy;
+    private TextView statReturn;
+    private TextView statTcp;
+    private TextView statIpv6;
+    private View rowIpv6;
     private TextView logView;
     private EditText delay;
     private CheckBox exact;
@@ -53,7 +59,12 @@ public class MainActivity extends Activity {
 
         toggle = findViewById(R.id.btnToggle);
         status = findViewById(R.id.tvStatus);
-        stats = findViewById(R.id.tvStats);
+        statUdp = findViewById(R.id.statUdp);
+        statDecoy = findViewById(R.id.statDecoy);
+        statReturn = findViewById(R.id.statReturn);
+        statTcp = findViewById(R.id.statTcp);
+        statIpv6 = findViewById(R.id.statIpv6);
+        rowIpv6 = findViewById(R.id.rowIpv6);
         logView = findViewById(R.id.tvLog);
         delay = findViewById(R.id.etDelay);
         exact = findViewById(R.id.cbExact);
@@ -186,8 +197,18 @@ public class MainActivity extends Activity {
             String text = DroverVpnService.statusText;
             setText(status, text.isEmpty() ? getString(R.string.status_stopped) : text);
         }
-        setText(stats, statsText());
+        setText(statUdp, num(DroverVpnService.udpCount.get()));
+        setText(statDecoy, num(DroverVpnService.decoyCount.get()));
+        setText(statReturn, num(DroverVpnService.injectedCount.get()));
+        setText(statTcp, num(DroverVpnService.tcpCount.get()));
+        long v6 = DroverVpnService.ipv6Dropped.get();
+        setText(statIpv6, num(v6));
+        rowIpv6.setVisibility(v6 > 0 ? View.VISIBLE : View.GONE);
         setText(logView, DroverVpnService.logsText());
+    }
+
+    private static String num(long value) {
+        return Long.toString(value);
     }
 
     private static void setText(TextView view, CharSequence value) {
@@ -195,18 +216,5 @@ public class MainActivity extends Activity {
         if (current == null || !current.toString().contentEquals(value)) {
             view.setText(value);
         }
-    }
-
-    private String statsText() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getString(R.string.stat_udp, DroverVpnService.udpCount.get())).append('\n');
-        sb.append(getString(R.string.stat_decoy, DroverVpnService.decoyCount.get())).append('\n');
-        sb.append(getString(R.string.stat_return, DroverVpnService.injectedCount.get())).append('\n');
-        sb.append(getString(R.string.stat_tcp, DroverVpnService.tcpCount.get()));
-        long v6 = DroverVpnService.ipv6Dropped.get();
-        if (v6 > 0) {
-            sb.append('\n').append(getString(R.string.stat_ipv6, v6));
-        }
-        return sb.toString();
     }
 }

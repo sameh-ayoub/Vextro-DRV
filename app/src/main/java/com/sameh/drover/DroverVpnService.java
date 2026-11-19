@@ -151,7 +151,7 @@ public class DroverVpnService extends VpnService {
             active = true;
             running = true;
             statusText = getString(R.string.status_running);
-            log(getString(R.string.log_opened, delayMs,
+            log(getString(R.string.log_opened, String.valueOf(delayMs),
                     getString(exact74 ? R.string.yes : R.string.no),
                     getString(fake != null ? R.string.yes : R.string.no)));
             updateNotification(getString(R.string.notif_active));
@@ -201,7 +201,7 @@ public class DroverVpnService extends VpnService {
             }
             byte[] out = new byte[read];
             System.arraycopy(buf, 0, out, 0, read);
-            log(getString(R.string.log_asset, name, read));
+            log(getString(R.string.log_asset, name, String.valueOf(read)));
             return out;
         } catch (IOException e) {
             Log.w(TAG, "asset " + e);
