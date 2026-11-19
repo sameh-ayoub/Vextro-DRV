@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tagline">توجيه صوت ديسكورد</string>
+    <string name="lang_ar_cd">العربية</string>
+    <string name="lang_en_cd">الإنجليزية</string>
+
+    <string name="status_stopped">متوقف</string>
+    <string name="status_running">يعمل — ديسكورد فقط</string>
+    <string name="status_starting">جاري التشغيل…</string>
+    <string name="status_error">خطأ</string>
+    <string name="status_error_prefix">خطأ: %1$s</string>
+
+    <string name="btn_start">تشغيل</string>
+    <string name="btn_stop">إيقاف</string>
+
+    <string name="section_settings">الإعدادات</string>
+    <string name="section_stats">الإحصاءات</string>
+    <string name="section_log">السجل</string>
+
+    <string name="label_delay">التأخير قبل الحزمة الأصلية</string>
+    <string name="unit_ms">مللي ثانية</string>
+    <string name="opt_strict">الوضع الدقيق — 74 بايت</string>
+    <string name="opt_strict_desc">يطبّق إجراء الحزمة الأولى على الحزم بحجم 74 بايت فقط.</string>
+    <string name="opt_fake">إرسال حزمة التمويه</string>
+    <string name="opt_fake_desc">يضع الحزمة المجهّزة (1200 بايت) قبل بايتَي العلامة.</string>
+
+    <string name="stat_udp">حزم UDP المعالَجة: %1$d</string>
+    <string name="stat_decoy">إجراءات الحزمة الأولى: %1$d</string>
+    <string name="stat_return">حزم عائدة: %1$d</string>
+    <string name="stat_tcp">جلسات TCP: %1$d</string>
+    <string name="stat_ipv6">حزم IPv6 مُهملة: %1$d</string>
+
+    <string name="note">تُطبَّق الإعدادات بعد إعادة التشغيل. ديسكورد وحده يمر عبر التطبيق، وبقية التطبيقات تبقى على اتصالها الطبيعي.</string>
+
+    <string name="toast_vpn_denied">تم رفض إذن VPN</string>
+
+    <string name="error_discord_missing">ديسكورد (com.discord) غير مثبّت</string>
+    <string name="error_establish">تعذّر إنشاء النفق</string>
+    <string name="error_unexpected">توقف النفق بشكل غير متوقع</string>
+    <string name="error_start">تعذّر التشغيل: %1$s</string>
+
+    <string name="notif_channel">النفق</string>
+    <string name="notif_preparing">جاري التجهيز…</string>
+    <string name="notif_active">يحمي صوت ديسكورد</string>
+    <string name="notif_stop">إيقاف</string>
+
+    <string name="log_manual_stop">طلب إيقاف</string>
+    <string name="log_opened">فُتح النفق · تأخير %1$d · دقيق %2$s · تمويه %3$s</string>
+    <string name="log_closed">أُغلق النفق</string>
+    <string name="log_revoked">سُحب إذن VPN</string>
+    <string name="log_asset">%1$s — %2$d بايت</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+
+    <string name="flow_new">مسار → %1$s:%2$d</string>
+    <string name="err_protect_udp">رفض protect() على UDP</string>
+    <string name="err_protect_tcp">رفض protect() على TCP</string>
+</resources>

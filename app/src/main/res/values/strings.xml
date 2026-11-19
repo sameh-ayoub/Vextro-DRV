@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Vextro DRV</string>
+    <string name="credit">DEV BY Sameh</string>
+
+    <string name="tagline">Discord voice routing</string>
+    <string name="lang_ar_cd">Arabic</string>
+    <string name="lang_en_cd">English</string>
+
+    <string name="status_stopped">Stopped</string>
+    <string name="status_running">Running — Discord only</string>
+    <string name="status_starting">Starting…</string>
+    <string name="status_error">Error</string>
+    <string name="status_error_prefix">Error: %1$s</string>
+
+    <string name="btn_start">Start</string>
+    <string name="btn_stop">Stop</string>
+
+    <string name="section_settings">Settings</string>
+    <string name="section_stats">Statistics</string>
+    <string name="section_log">Log</string>
+
+    <string name="label_delay">Delay before the original packet</string>
+    <string name="unit_ms">ms</string>
+    <string name="opt_strict">Strict mode — 74 bytes</string>
+    <string name="opt_strict_desc">Applies the first-packet routine only to 74-byte packets.</string>
+    <string name="opt_fake">Send the decoy packet</string>
+    <string name="opt_fake_desc">Places the packaged 1200-byte packet before the marker bytes.</string>
+
+    <string name="stat_udp">UDP packets handled: %1$d</string>
+    <string name="stat_decoy">First-packet routines: %1$d</string>
+    <string name="stat_return">Packets returned: %1$d</string>
+    <string name="stat_tcp">TCP sessions: %1$d</string>
+    <string name="stat_ipv6">IPv6 packets skipped: %1$d</string>
+
+    <string name="note">Settings apply after a restart. Only Discord is routed; every other app keeps the normal connection.</string>
+
+    <string name="toast_vpn_denied">VPN permission denied</string>
+
+    <string name="error_discord_missing">Discord (com.discord) is not installed</string>
+    <string name="error_establish">Could not create the tunnel</string>
+    <string name="error_unexpected">Tunnel stopped unexpectedly</string>
+    <string name="error_start">Could not start: %1$s</string>
+
+    <string name="notif_channel">Tunnel</string>
+    <string name="notif_preparing">Preparing…</string>
+    <string name="notif_active">Protecting Discord voice</string>
+    <string name="notif_stop">Stop</string>
+
+    <string name="log_manual_stop">stop requested</string>
+    <string name="log_opened">tunnel open · delay %1$d ms · strict %2$s · decoy %3$s</string>
+    <string name="log_closed">tunnel closed</string>
+    <string name="log_revoked">vpn permission revoked</string>
+    <string name="log_asset">%1$s loaded · %2$d bytes</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+
+    <string name="flow_new">flow → %1$s:%2$d</string>
+    <string name="err_protect_udp">protect() rejected on UDP</string>
+    <string name="err_protect_tcp">protect() rejected on TCP</string>
+</resources>
