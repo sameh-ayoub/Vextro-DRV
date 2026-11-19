@@ -1,100 +1,193 @@
+﻿<div align="center">
+
+<img src="docs/banner.png" alt="Vextro DRV" width="100%">
+
 # Vextro DRV
 
-Discord voice routing for Android. It carries only Discord's traffic and adapts the first UDP packet of each voice stream instead of running a full-device VPN.
+**Discord voice routing for Android — one app, one tunnel.**
 
-**DEV BY Sameh**
+Put Discord's voice traffic on a route that survives restrictive networks, without pushing the
+whole phone through a VPN. Only `com.discord` is touched; every other app keeps its normal
+connection, speed and battery life.
+
+<br>
+
+[![Platform](https://img.shields.io/badge/Android-7.0%2B-8A5A36?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com)
+[![Min SDK](https://img.shields.io/badge/minSdk-24-121212?style=for-the-badge)](#requirements)
+[![Release](https://img.shields.io/badge/release-v1.1-8A5A36?style=for-the-badge)](#download)
+[![License](https://img.shields.io/badge/license-MIT-121212?style=for-the-badge)](LICENSE)
+[![Java](https://img.shields.io/badge/Java-no%20dependencies-8A5A36?style=for-the-badge&logo=openjdk&logoColor=white)](#build)
+
+[Download](#download) · [How it works](#how-it-works) · [Build](#build) · [العربية](#العربية)
+
+</div>
 
 ---
 
-## English
+## Overview
 
-### What it does
+Vextro DRV is the Android companion to the Drover idea: instead of hiding traffic behind a
+full-device VPN, it adapts the **first packet** of each voice stream so the connection is read
+differently by the network, then lets the rest of the call flow untouched.
 
-Vextro DRV opens an Android `VpnService` tunnel that includes a single package, `com.discord`. Every other app keeps the normal connection, so speeds, data usage and battery stay untouched.
+The result is a tunnel that costs almost nothing: two small markers and a 1.2 KB block per
+voice stream, sent once, followed by a short pause.
 
-Inside the tunnel:
+| | Full-device VPN | Vextro DRV |
+|---|---|---|
+| Apps affected | all of them | Discord only |
+| Data overhead | everything re-routed | ~1.2 KB per voice stream |
+| Extra latency | continuous | once, at stream start |
+| Battery | always on | negligible |
+| Works with other apps | slows them down | they never notice |
 
-- **UDP (voice)** — the first packet of a stream is followed by the packaged 1200-byte block, two marker bytes and a short pause before the original packet goes out. Later packets pass through unchanged, and anything that arrives during the pause is queued and sent in order.
-- **TCP** — a local relay terminates each session and reconnects through a protected socket, so the gateway, chat and login keep working.
-- **Return path** — responses are rebuilt with fresh IPv4/UDP headers and checksums and written back into the tunnel.
+## Features
 
-### Features
+- **Per-app tunnel** — `addAllowedApplication("com.discord")`, nothing else is routed.
+- **Voice-first logic** — the first 74-byte UDP packet of a stream is preceded by the packaged
+  1200-byte block, two marker bytes and a configurable pause.
+- **Order preserved** — packets arriving during the pause are queued and sent afterwards in order.
+- **TCP relay** — gateway, chat and login keep working because each TCP session is terminated
+  locally and reconnected through a protected socket.
+- **Return path rebuilt** — responses get fresh IPv4/UDP headers and checksums before going back
+  into the tunnel.
+- **Arabic & English** — switch instantly from the flags in the header.
+- **Live view** — counters for handled packets, stream starts, returned packets and TCP sessions,
+  plus an in-app log.
 
-- Per-app tunnel: Discord only.
-- Arabic and English, switchable from the header flags.
-- Adjustable delay, strict 74-byte mode, optional decoy packet.
-- Live counters and an in-app log.
+## How it works
 
-### Requirements
-
-Android 7.0 (API 24) or newer, and Discord installed from any source under the package name `com.discord`.
-
-### Build
-
-```bash
-export ANDROID_HOME=/path/to/android-sdk
-./gradlew assembleDebug
+```mermaid
+flowchart LR
+    A[Discord] -->|UDP voice| B[tun0]
+    A -->|TCP gateway / chat| C[TcpRelay]
+    B --> D[UdpRelay]
+    D -->|first packet| E[decoy block<br/>00 · 01 · pause]
+    D -->|later packets| F[network]
+    E --> F
+    F -->|responses| B
+    C -->|protected socket| F
 ```
 
-or with a standalone Gradle 8.7:
+1. A `VpnService` tunnel is created with a single allowed package.
+2. Raw IPv4 packets are parsed by hand (no libraries): source, destination, ports, payload.
+3. UDP streams are tracked by address and port tuple. The first packet that matches the size rule
+   triggers the opening sequence; everything after it is forwarded as-is.
+4. TCP segments are answered locally, so the app never notices that its connection is relayed.
 
-```bash
-gradle assembleDebug
-```
+## Requirements
 
-The APK ends up in `app/build/outputs/apk/debug/`.
+- Android 7.0 (API 24) or newer.
+- Discord installed under the package name `com.discord`.
+- ARM, ARM64 or x86 — the app has no native code, so every ABI is supported.
 
-`compileSdk 34`, `targetSdk 33`, `minSdk 24`. Java only, no third-party dependencies.
+## Download
 
-### Install
+Grab [`Vextro-DRV-v1.1.apk`](Vextro-DRV-v1.1.apk) from this repository, or install over ADB:
 
 ```bash
 adb install -r Vextro-DRV-v1.1.apk
 ```
 
-### Usage
+## Build
+
+```bash
+git clone https://github.com/sameh-ayoub/Vextro-drover.git
+cd Vextro-drover
+
+export ANDROID_HOME=/path/to/android-sdk
+./gradlew assembleDebug
+```
+
+The APK is written to `app/build/outputs/apk/debug/`.
+
+`compileSdk 34` · `targetSdk 33` · `minSdk 24` · Java 17 · no third-party dependencies.
+
+## Usage
 
 1. Open the app and press **Start**.
-2. Accept the VPN request. Only Discord is routed.
-3. Join a voice channel. The counters should move within a few seconds.
+2. Accept the VPN request — only Discord is routed.
+3. Join a voice channel; the counters move within a few seconds.
 4. Press **Stop** to close the tunnel.
 
-Settings take effect after a restart of the tunnel.
+## Settings
 
-### Known limits
+| Setting | Default | What it does |
+|---|---|---|
+| **Delay** | `50 ms` | Pause between the opening markers and the original packet |
+| **Strict mode** | on | Applies the opening sequence only to 74-byte packets |
+| **Decoy packet** | on | Sends the packaged 1200-byte block before the markers |
 
-- Android allows one VPN at a time; starting Vextro DRV disconnects any other VPN.
-- IPv6 packets are skipped. Networks that carry voice over IPv6 only will not benefit.
-- On Xiaomi/Redmi devices enable Autostart and set the battery saver to "No restrictions", otherwise the system may stop the service.
+Changes take effect after restarting the tunnel.
 
-### License
+## Known limits
 
-MIT, see [LICENSE](LICENSE).
+- Android allows one VPN at a time, so starting Vextro DRV disconnects any other VPN.
+- IPv6 packets are skipped; networks that carry voice over IPv6 only are not covered.
+- On Xiaomi/Redmi devices, enable Autostart and set the battery profile to *No restrictions*,
+  otherwise the system may stop the service.
+
+## Project layout
+
+```
+app/src/main/java/com/sameh/drover/
+├── MainActivity.java       interface, language switch, counters
+├── DroverVpnService.java   tunnel lifecycle and packet dispatch
+├── UdpRelay.java           voice streams and the opening sequence
+├── TcpRelay.java           local TCP termination
+├── Net.java                IPv4 / UDP / TCP builders and checksums
+└── Lang.java               in-app language handling
+```
+
+## Credits
+
+Built and maintained by **[Sameh](https://github.com/sameh-ayoub)** — the Android implementation,
+the interface and the packaging.
+
+The technique and the packaged block come from the original
+[Drover](https://github.com/hdrover/discord-drover) project by **hdrover**, which targets Discord
+on Windows.
+
+<div align="center">
+
+**DEV BY SAMEH**
+
+</div>
+
+## License
+
+[MIT](LICENSE) © 2026 Sameh
 
 ---
 
+<div dir="rtl" align="right">
+
 ## العربية
 
-### ما يفعله
+**توجيه صوت ديسكورد على أندرويد — تطبيق واحد ونفق واحد.**
 
-يفتح Vextro DRV نفق `VpnService` يُدخل حزمة واحدة فقط هي `com.discord`. بقية تطبيقات الجهاز تبقى على اتصالها الطبيعي، فلا تتأثر السرعة ولا استهلاك البيانات ولا البطارية.
+يضع Vextro DRV صوت ديسكورد على مسار يعمل في الشبكات المقيّدة، دون تمرير الجوال كله عبر VPN.
+تطبيق ديسكورد وحده (`com.discord`) يدخل النفق، وبقية التطبيقات تبقى على اتصالها الطبيعي
+بسرعتها واستهلاكها.
 
-داخل النفق:
+### الفكرة
 
-- **UDP (الصوت)** — الحزمة الأولى في كل مسار يتبعها الملف المجهّز بحجم 1200 بايت، ثم بايتان للعلامة، ثم وقفة قصيرة قبل خروج الحزمة الأصلية. بقية الحزم تمر كما هي، وما يصل أثناء الوقفة يُحفظ ويُرسل بالترتيب.
-- **TCP** — وكيل محلي يُنهي كل جلسة ويعيد الاتصال عبر سوكت محمي، فتبقى البوابة والشات وتسجيل الدخول تعمل.
-- **مسار العودة** — تُعاد بناء الردود برؤوس IPv4/UDP ومجاميع تحقق جديدة وتُكتب داخل النفق.
+بدل إخفاء الترافيك خلف VPN شامل، يُعدَّل **أول حزمة** من كل مسار صوتي، ثم يمر بقية المكالمة كما هو.
+التكلفة: كتلة بحجم 1.2 كيلوبايت وبايتان للعلامة ووقفة قصيرة، مرة واحدة لكل مسار صوتي.
 
 ### المزايا
 
 - نفق لتطبيق واحد: ديسكورد فقط.
+- تمويه أول حزمة بحجم 74 بايت مع الحفاظ على ترتيب الحزم.
+- وكيل TCP يُبقي البوابة والشات وتسجيل الدخول تعمل.
 - عربي وإنجليزي، يُبدَّل من العلمين في الأعلى.
-- تأخير قابل للضبط، ووضع دقيق لحجم 74 بايت، وحزمة تمويه اختيارية.
 - عدّادات حية وسجل داخل التطبيق.
 
-### المتطلبات
+### التثبيت
 
-أندرويد 7.0 (API 24) أو أحدث، وديسكورد مثبّت باسم الحزمة `com.discord`.
+```bash
+adb install -r Vextro-DRV-v1.1.apk
+```
 
 ### البناء
 
@@ -103,29 +196,31 @@ export ANDROID_HOME=/path/to/android-sdk
 ./gradlew assembleDebug
 ```
 
-الملف الناتج في `app/build/outputs/apk/debug/`.
-
-### التثبيت
-
-```bash
-adb install -r Vextro-DRV-v1.1.apk
-```
-
 ### الاستخدام
 
 1. افتح التطبيق واضغط **تشغيل**.
-2. اقبل طلب VPN. ديسكورد وحده يمر عبر النفق.
+2. اقبل طلب VPN — ديسكورد وحده يمر عبر النفق.
 3. ادخل قناة صوتية وستتحرك العدّادات خلال ثوانٍ.
 4. اضغط **إيقاف** لإغلاق النفق.
 
-تُطبَّق الإعدادات بعد إعادة تشغيل النفق.
+### الإعدادات
+
+| الإعداد | الافتراضي | الوظيفة |
+|---|---|---|
+| **التأخير** | `50` مللي ثانية | الوقفة بين العلامات والحزمة الأصلية |
+| **الوضع الدقيق** | مفعّل | تطبيق الإجراء على حزم 74 بايت فقط |
+| **حزمة التمويه** | مفعّل | إرسال الكتلة المجهّزة قبل العلامات |
 
 ### حدود معروفة
 
 - أندرويد يسمح بـ VPN واحد فقط، فتشغيل التطبيق يقطع أي VPN آخر.
-- حزم IPv6 تُهمل، والشبكات التي تنقل الصوت عبر IPv6 فقط لن تستفيد.
+- حزم IPv6 تُهمل، والشبكات التي تنقل الصوت عبر IPv6 فقط غير مشمولة.
 - على أجهزة Xiaomi/Redmi فعّل «بدء تلقائي» واضبط البطارية على «بدون قيود».
 
-### الحقوق
+<div align="center">
 
-MIT، انظر [LICENSE](LICENSE).
+**صنع بواسطة سامح**
+
+</div>
+
+</div>
