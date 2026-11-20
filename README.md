@@ -20,7 +20,7 @@
 [![License](https://img.shields.io/badge/license-MIT-121212?style=flat-square)](LICENSE)
 [![Java](https://img.shields.io/badge/Java-no%20dependencies-8A5A36?style=flat-square&logo=openjdk&logoColor=white)](#build)
 
-[How it works](#how-it-works) · [FAQ](#faq) · [Install](#install) · [Build](#build) · [العربية](#العربية)
+[How it works](#how-it-works) · [FAQ](#faq) · [Install](#install) · [Build](#build) · [Video](#video) · [العربية](#العربية)
 
 </div>
 
@@ -44,6 +44,17 @@
 <br>
 <sub>Press start, join a call — counters move within seconds.</sub>
 </div>
+
+## Video
+
+<a href="https://sameh-ayoub.github.io/Vextro-DRV/#video">
+  <img src="docs/video-poster.jpg" alt="Vextro DRV motion graphics video" width="640">
+</a>
+
+A 41-second motion graphics explainer — no audio, no narration — covering the problem,
+how the tunnel works, and what the app does. Watch it on the
+[project site](https://sameh-ayoub.github.io/Vextro-DRV/#video) or
+[download the MP4](docs/vextro-drv-motion-16x9.mp4) (1920×1080, 30fps).
 
 ## Overview
 
@@ -249,6 +260,14 @@ on Windows.
 - وكيل TCP يُبقي البوابة والشات وتسجيل الدخول تعمل.
 - عربي وإنجليزي، يُبدَّل من العلمين في الأعلى.
 - عدّادات حية وسجل داخل التطبيق.
+
+### الفيديو
+
+[![فيديو تعريفي](docs/video-poster.jpg)](https://sameh-ayoub.github.io/Vextro-DRV/#video)
+
+موشن جرافيك مدته 41 ثانية بلا صوت: المشكلة، طريقة عمل النفق، والمزايا.
+شاهده على [صفحة المشروع](https://sameh-ayoub.github.io/Vextro-DRV/#video) أو
+[نزّل الملف](docs/vextro-drv-motion-16x9.mp4) (1920×1080، 30fps).
 
 ### التثبيت
 

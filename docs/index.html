@@ -67,6 +67,8 @@
   dl.faq dd{margin:6px 0 0;color:var(--soft);font-size:14.5px}
   .shot{display:flex;gap:16px;overflow:auto;padding:6px 0}
   .shot img{width:190px;border:1px solid var(--line);border-radius:16px}
+  .video-frame{display:block;width:100%;border:1px solid var(--line);border-radius:16px;background:#000;margin-top:18px}
+  .video-cap{font-size:13px;color:var(--muted);margin-top:10px}
   .en{direction:ltr;text-align:left}
   .en h2 .rule{margin-left:0}
   footer{padding:30px 0 44px;text-align:center;color:var(--muted);font-size:13px}
@@ -80,6 +82,7 @@
     <img src="./logo.png" alt="Vextro DRV">
     <strong>Vextro DRV</strong>
     <nav>
+      <a href="#video">فيديو</a>
       <a href="#download">تحميل</a>
       <a href="#how">كيف يعمل</a>
       <a href="#faq">الأسئلة</a>
@@ -104,6 +107,17 @@
     </div>
     <div class="meta">أندرويد 7.0 أو أحدث · حجم 333 كيلوبايت · موقّع بمفتاح إصدار · عربي وإنجليزي</div>
   </div>
+
+  <section id="video">
+    <h2><span class="rule"></span>فيديو تعريفي</h2>
+    <p>موشن جرافيك يشرح المشكلة، طريقة العمل، والمزايا في 41 ثانية — بدون صوت.</p>
+    <video class="video-frame" controls preload="metadata" playsinline poster="./video-poster.jpg">
+      <source src="./vextro-drv-motion-16x9.mp4" type="video/mp4">
+      متصفحك لا يدعم تشغيل الفيديو.
+      <a href="./vextro-drv-motion-16x9.mp4">تحميل الفيديو (MP4)</a>
+    </video>
+    <p class="video-cap">1920×1080 · 30fps · بدون صوت · <a href="./vextro-drv-motion-16x9.mp4" download>تحميل الملف</a></p>
+  </section>
 
   <section>
     <h2><span class="rule"></span>هل هذا هو Drover نفسه؟</h2>
@@ -178,6 +192,10 @@
       Android 7.0+, ~333 KB, Arabic and English.
       <a href="https://github.com/sameh-ayoub/Vextro-DRV/releases/latest">Download the APK</a> or read the
       <a href="https://github.com/sameh-ayoub/Vextro-DRV">source</a>.
+    </p>
+    <p>
+      <a href="#video">▶ Watch the 41-second motion graphics video</a> (no audio) or
+      <a href="./vextro-drv-motion-16x9.mp4" download>download the MP4</a>.
     </p>
   </section>
 
